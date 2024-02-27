@@ -63,7 +63,12 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Nombre'))
+                    ->searchable()
+                    ->sortable()
+                    ->description(fn (Category $category) => $category->description),
+                
             ])
             ->filters([
                 //
