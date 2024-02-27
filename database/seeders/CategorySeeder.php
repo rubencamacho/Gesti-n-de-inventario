@@ -1,0 +1,36 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Category;
+
+class CategorySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Category::create([
+            'name' => 'Ropa',
+            'description' => 'Ropa a buen precio y de calidad',
+        ]);
+
+        Category::create([
+            'name' => 'Accesorios',
+            'description' => 'Accesorios para teléfonos, computadoras, etc.',
+        ]);
+
+        Category::create([
+            'name' => 'Juguetes',
+            'description' => 'Jugetes para niños y niñas',
+        ]);
+
+        Category::create([
+            'name' => 'Aliemntos',
+            'description' => 'Alimentos con grandes descuentos y de calidad',
+        ]);
+    }
+}
