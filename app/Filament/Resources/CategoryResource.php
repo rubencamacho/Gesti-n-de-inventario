@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -40,7 +42,20 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->label(__('Nombre'))
+                    ->required()
+                    ->autofocus()
+                    ->minLength(2)
+                    ->maxLength(200)
+                    ->unique(static::getModel(), 'name', ignoreRecord: true)    //Crrear sin repetidos pero ignorando el registro actual
+                    ->columnSpanFull()
+                    ->placeholder(__('Nombre de la categoría')),
+                Textarea::make('description')
+                    ->label(__('Descripción'))
+                    ->rows(2)
+                    ->columnSpanFull()
+                    ->placeholder(__('Descripción de la categoría')),
             ]);
     }
 
