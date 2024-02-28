@@ -25,7 +25,7 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'name' => 'Juguetes',
-            'description' => 'Jugetes para niños y niñas',
+            'description' => 'Juguetes para niños y niñas',
         ]);
 
         Category::create([

@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
+use App\Filament\Resources\ProductResource\Widgets\ProductOverview;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+
 
 class ListProducts extends ListRecords
 {
@@ -14,6 +16,13 @@ class ListProducts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ProductResource\Widgets\ProductOverview::class,
         ];
     }
 }
