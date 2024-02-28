@@ -4,19 +4,26 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\FormsComponent;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Infolists\Components\Section;
+
 
 
 class ProductResource extends Resource
@@ -137,7 +144,9 @@ class ProductResource extends Resource
                     ->searchable(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -148,6 +157,26 @@ class ProductResource extends Resource
             //Añadimos el botón de crear categorías en el listado si no hay registros
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
+            ]);
+    }
+
+    //Mosttar información en una ventana separada
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                ImageEntry::make('image')
+                    ->columnSpanFull()
+                    ->hiddenLabel(),
+                Section::make()->schema([
+                    TextEntry::make('name')
+                        ->label(__('Nombre')),
+                    TextEntry::make('price')
+                        ->label(__('Precio'))
+                        ->money('eur'),
+                    TextEntry::make('category.name')
+                        ->label(__('Categoría')),
+                ])->columns(3),
             ]);
     }
 
