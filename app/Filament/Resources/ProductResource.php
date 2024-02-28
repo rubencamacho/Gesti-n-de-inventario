@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use Filament\Forms\FormsComponent;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 
@@ -102,7 +104,30 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                //
+                ImageColumn::make('image')
+                    ->label(__('Imagen')),
+                TextColumn::make('name')
+                    ->label(__('Nombre'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('price')
+                    ->label(__('Precio'))
+                    ->sortable()
+                    // ->money('eur')
+                    ->formatStateUsing(fn ($record) => number_format($record->price, 2, ',', '.') . ' €'),
+                TextColumn::make('category.name')
+                    ->label(__('Categoría'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label(__('Creado'))
+                    ->sortable()
+                    ->date('d/m/Y H:i'),
+                TextColumn::make('updated_at')
+                    ->label(__('Actualizado'))
+                    ->sortable()
+                    ->date('d/m/Y H:i'),
+                    
             ])
             ->filters([
                 //
