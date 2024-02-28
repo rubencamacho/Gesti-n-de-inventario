@@ -32,7 +32,7 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-       //Ordenar los elementos de la navegación
+    //Ordenar los elementos de la navegación
     protected static ?int $navigationSort = 20;
 
     //Creación de grupos

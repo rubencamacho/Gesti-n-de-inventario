@@ -29,7 +29,7 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'Aliemntos',
+            'name' => 'Alimentos',
             'description' => 'Alimentos con grandes descuentos y de calidad',
         ]);
     }
