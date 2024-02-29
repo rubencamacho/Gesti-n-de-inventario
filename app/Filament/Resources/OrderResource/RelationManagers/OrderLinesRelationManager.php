@@ -81,6 +81,22 @@ class OrderLinesRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('product.name')
+                    ->label(__('Producto'))
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->label(__('Cantidad'))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('unit_price')
+                    ->label(__('Precio unitario'))
+                    ->sortable()
+                    ->money('eur'),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->label(__('Precio total'))
+                    ->state(fn ($record) => $record->quantity * $record->unit_price)
+                    ->sortable()
+                    ->money('eur'),
             ])
             ->filters([
                 //
