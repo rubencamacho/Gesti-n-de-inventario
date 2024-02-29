@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\Grid;
 use App\Models\User;
 use Filament\Forms\Components\TextInput;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 
@@ -134,7 +135,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrderResource\RelationManagers\OrderLinesRelationManager::class
         ];
     }
 
