@@ -2,8 +2,14 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
+use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,8 +35,44 @@ class OrderLinesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                //
-            ]);
+                Hidden::make('order_id')
+                    ->default($this->ownerRecord->id),
+                Grid::make()
+                    ->columns(3)
+                    ->schema([
+                        Select::make('product_id')
+                            ->label(__('Producto'))
+                            ->placeholder(__('Selecciona un producto'))
+                            ->options(
+                                Product::query()
+                                    ->orderBy('name')
+                                    ->pluck('name', 'id')
+                            )
+                            ->searchable()
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function (Select $component, Set $set) {
+                                $product = Product::query()
+                                    ->where('id', $component->getState())
+                                    ->first();
+                                
+                                $set('unit_price', $product?->price ?? 0);
+                            }),
+                        TextInput::make('quantity')
+                            ->numeric()
+                            ->label(__('Cantidad'))
+                            ->placeholder(__('Introduce la cantidad'))
+                            ->type('number')
+                            ->default(1)
+                            ->required(),
+                        TextInput::make('unit_price')
+                            ->label(__('Precio unitario'))
+                            ->placeholder(__('Introduce el precio unitario'))
+                            ->default(0)
+                            ->suffix('€')
+                            ->required(),
+                        ]),
+                ]);
     }
 
     public function table(Table $table): Table
